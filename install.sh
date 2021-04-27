@@ -1,19 +1,30 @@
-function mount() {
-  echo mounting root parition
-  mount -o noatime,compress=lzo,space_cache,subvol=@ /dev/nvme1n1p3 /mnt/
+# Mounts my btrfs subvolumes
+function mount_subvols() {
+  echo mounting root subvolume
+  mount -o noatime,compress=lzo,space_cache,discard=async,subvol=@ /dev/nvme0n1p3 /mnt/
   echo creating subvolume directories if not already existing
-  mkdir -p /mnt/{boot,home,.snapshots}
-  echo mounting sub volumes
-  mount -o noatime,compress=lzo,space_cache,subvol=@home /dev/nvme1n1p3 /mnt/home
-  mount -o noatime,compress=lzo,space_cache,subvol=@.snapshots /dev/nvme1n1p3 /mnt/.snapshots
+  mkdir -p /mnt/{boot,home}
+  echo mounting home subvolume
+  mount -o noatime,compress=lzo,space_cache,discard=async,subvol=@home /dev/nvme0n1p3 /mnt/home
+  # mount -o noatime,compress=lzo,space_cache,discard=async,subvol=@.snapshots /dev/nvme0n1p3 /mnt/.snapshots
   echo mouting boot parition
-  mount /dev/nvme1n1p1 /mnt/boot
+  mount /dev/nvme0n1p1 /mnt/boot
   echo generating fstab
   myfstab="$(genfstab -U /mnt)"
-  echo $myfstab
+  return $myfstab
+}
+
+function create_subvols() {
+  echo mounting btrfs
+  mount -t btrfs /dev/nvme0n1p3 /mnt
+  btrfs su cr /mnt/@
+  btrfs su cr /mnt/@home
+
+
 }
 
 
-pacstrap /mnt base linux-zen linux-zen-headers vim amd-ucode btrfs-progs openssh
 
-genfstab -U /mnt >> /mnt/etc/fstab
+# pacstrap /mnt base linux-zen linux-zen-headers vim amd-ucode btrfs-progs openssh
+
+# genfstab -U /mnt >> /mnt/etc/fstab
