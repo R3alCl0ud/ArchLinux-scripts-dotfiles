@@ -9,9 +9,7 @@ function mount_subvols() {
   # mount -o noatime,compress=lzo,space_cache,discard=async,subvol=@.snapshots /dev/nvme0n1p3 /mnt/.snapshots
   echo mouting boot parition
   mount /dev/nvme0n1p1 /mnt/boot
-  echo generating fstab
-  myfstab="$(genfstab -U /mnt)"
-  return $myfstab
+
 }
 
 function create_subvols() {
@@ -20,11 +18,16 @@ function create_subvols() {
   btrfs su cr /mnt/@
   btrfs su cr /mnt/@home
 
-
 }
 
+function install_amd() {
 
+  pacstrap /mnt/new_install base linux-zen linux-zen-headers vim amd-ucode btrfs-progs openssh
+  
+  echo generating fstab
+  myfstab="$(genfstab -U /mnt)"
+  echo $myfstab >> /mnt/etc/fstab
 
-# pacstrap /mnt base linux-zen linux-zen-headers vim amd-ucode btrfs-progs openssh
+}
 
 # genfstab -U /mnt >> /mnt/etc/fstab
