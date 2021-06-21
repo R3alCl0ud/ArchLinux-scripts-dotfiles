@@ -52,7 +52,7 @@ bindsym $mod+Shift+q kill
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
-bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
+# bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
 # change focus
 bindsym $mod+j focus left
@@ -210,9 +210,7 @@ no_focus [class="plasmashell" window_type="notification"]
 exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
 
 # loads desktop background
-# exec --no-startup-id feh --xinerama-index 1 --bg-scale ~/Pictures/deskmatfinal.png
-
-# exec --no-startup-id feh --xinerama-index 0 --bg-scale ~/Pictures/deskmatfinal.png
+exec --no-startup-id feh --bg-scale ~/Pictures/deskmatfinal.png
 
 
 # using plasma's logout screen instead of i3's
