@@ -1,2 +1,1 @@
-picom -b --config ~/.config/picom/picom.conf | grep > $("pwd")/start.log
-echo $("pwd")
+/usr/bin/picom -b --config /home/neptune/.config/picom/picom.conf
