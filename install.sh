@@ -17,9 +17,9 @@ function mount_subvols() {
 
   if ["$cpu_platform" == "amd"]; then
     install_amd
-  else if ["$cpu_platform" == "intel"]; then
-    install_intel
-  fi
+    elif ["$cpu_platform" == "intel"]; then
+      install_intel
+    fi
 }
 
 function create_subvols() {
