@@ -11,6 +11,15 @@ function mount_subvols() {
   read -p "" efi_sp
   echo mouting boot parition $efi_sp
   mount $efi_sp /mnt/boot
+
+  echo "Intel or AMD?"
+  read -p "" cpu_platform
+
+  if ["$cpu_platform" == "amd"]; then
+    install_amd
+  else if ["$cpu_platform" == "intel"]; then
+    install_intel
+  fi
 }
 
 function create_subvols() {
@@ -20,6 +29,8 @@ function create_subvols() {
   mount -t btrfs $install_drive /mnt
   btrfs su cr /mnt/@
   btrfs su cr /mnt/@home
+
+  umount /mnt
 
   mount_subvols $install_drive
 }
