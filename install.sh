@@ -40,9 +40,9 @@ function mount_subvols() {
   echo "Intel or AMD?"
   read -p "" cpu_platform
 
-  if ["$cpu_platform" = "amd"]; then
+  if [ "$cpu_platform" = "amd" ]; then
       install_amd
-    elif ["$cpu_platform" = "intel"]; then
+    elif [ "$cpu_platform" = "intel" ]; then
       install_intel
     fi
 }
